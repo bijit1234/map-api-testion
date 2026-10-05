@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coal Mine Map</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Coal Mine Locations</h1>
+
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+    <script>
+
+        // Create the map
+        const map = L.map("map").setView([22.36, 82.68], 10);
+
+        // Load OpenStreetMap
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; OpenStreetMap contributors"
+        }).addTo(map);
+
+        // Add mines
+        <% mines.forEach(mine => { %>
+
+            L.marker([
+                <%= mine.latitude %>,
+                <%= mine.longitude %>
+            ])
+            .addTo(map)
+            .bindPopup(`
+                <h3><%= mine.name %></h3>
+                <p>Location: <%= mine.location %></p>
+                <p>Status: <%= mine.status %></p>
+            `);
+
+        <% }) %>
+
+    </script>
+
+</body>
+</html>
